@@ -519,10 +519,6 @@
     </style>
 </head>
 <body class="antialiased min-h-screen p-6 md:p-12 lg:px-24">
-    <div id="preloader" class="fixed inset-0 z-[999999] bg-[#050505] flex flex-col justify-end items-start p-8 md:p-16 font-mono text-[#0f0] text-sm md:text-base transition-all duration-1000 ease-in-out">
-        <div id="boot-text" class="max-w-2xl w-full"></div>
-        <div class="mt-4 animate-pulse">_</div>
-    </div>
     <div class="cursor-dot" data-cursor-dot></div>
     <div class="cursor-outline" data-cursor-outline></div>
     <canvas id="matrix-bg" class="fixed inset-0 z-[-2] pointer-events-none opacity-20"></canvas>
@@ -896,61 +892,6 @@
     </div>
 
     <script>
-    /* === SYSTEM BOOT PRELOADER LOGIC === */
-        const preloader = document.getElementById('preloader');
-        const bootTextContainer = document.getElementById('boot-text');
-        
-        // Teks yang bakal diketik otomatis
-        const bootLines = [
-            "> INITIALIZING SYSTEM KERNEL...",
-            "> MOUNTING VIRTUAL DRIVES... OK",
-            "> LOADING UI/UX PROTOCOLS... OK",
-            "> ESTABLISHING DATABASE CONNECTION... OK",
-            "> BYPASSING FIREWALL... SUCCESS",
-            "> WELCOME, GUEST. ACCESS GRANTED."
-        ];
-
-        let lineIndex = 0;
-
-        function typeBootLine() {
-            if (lineIndex < bootLines.length) {
-                const lineDiv = document.createElement('div');
-                lineDiv.className = 'mb-1';
-                if (lineIndex === bootLines.length - 1) {
-                    lineDiv.classList.add('text-blue-400', 'font-bold', 'mt-4'); // Baris terakhir beda warna
-                }
-                bootTextContainer.appendChild(lineDiv);
-                
-                let charIndex = 0;
-                let currentLine = bootLines[lineIndex];
-                
-                // Ngetik per huruf
-                let typeInterval = setInterval(() => {
-                    lineDiv.textContent += currentLine[charIndex];
-                    charIndex++;
-                    if (charIndex >= currentLine.length) {
-                        clearInterval(typeInterval);
-                        lineIndex++;
-                        setTimeout(typeBootLine, 200); // Jeda sebelum ngetik baris berikutnya
-                    }
-                }, 20); // Kecepatan ngetik
-            } else {
-                // Selesai ngetik, ilangin layar preloader
-                setTimeout(() => {
-                    preloader.style.transform = 'translateY(-100%)'; // Layar keangkat ke atas
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 1000);
-                }, 800);
-            }
-        }
-
-        // Jalankan pas web baru dibuka
-        window.onload = () => {
-            // Biar halaman gak bisa di-scroll pas loading
-            window.scrollTo(0, 0); 
-            setTimeout(typeBootLine, 500);
-        };
-
         function openModal(title, issuer, date, imgSrc, verifyUrl) {
             const modal = document.getElementById('cert-modal');
             const content = document.getElementById('modal-content');
