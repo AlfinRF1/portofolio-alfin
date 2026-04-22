@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfin Rahmad Fauzi | Creative Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #050505;
+            color: #e5e5e5;
+            scroll-behavior: smooth;
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        .bento-card {
+            background: #0d0d0d;
+            border: 1px solid #1f1f1f;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bento-card:hover {
+            border-color: #3b82f6;
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+        }
+        .photo-glow {
+            position: relative;
+        }
+        .photo-glow::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(45deg, #3b82f6, #ec4899);
+            filter: blur(15px);
+            opacity: 0.3;
+            z-index: -1;
+            border-radius: 2rem;
+        }
+        /* Animasi Morphing Blob untuk Foto */
+        .blob-frame {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: auto;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: linear-gradient(45deg, #3b82f6, #ec4899);
+            animation: morph 8s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .blob-frame::before {
+            content: "";
+            position: absolute;
+            inset: -5px;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            filter: blur(20px);
+            opacity: 0.7;
+            z-index: -1;
+            animation: morph 8s ease-in-out infinite reverse;
+        }
+
+        .blob-photo {
+            width: 96%;
+            height: 96%;
+            object-fit: cover;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+            border: 4px solid #050505;
+        }
+
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        /* Custom Vault Glows & Bento Grid */
+        .vault-card {
+            background: #0d0d0d;
+            border: 1px solid #1f1f1f;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .vault-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: transparent;
+            transition: all 0.4s ease;
+        }
+        
+        /* Azure - Blue */
+        .glow-azure:hover { border-color: #3b82f6; box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3); transform: translateY(-5px); }
+        .glow-azure:hover::before { background: linear-gradient(90deg, transparent, #3b82f6, transparent); }
+        
+        /* AWS - Orange */
+        .glow-aws:hover { border-color: #f97316; box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.3); transform: translateY(-5px); }
+        .glow-aws:hover::before { background: linear-gradient(90deg, transparent, #f97316, transparent); }
+        
+        /* Google Cloud - Yellow/Green */
+        .glow-gcp:hover { border-color: #eab308; box-shadow: 0 10px 30px -10px rgba(234, 179, 8, 0.3); transform: translateY(-5px); }
+        .glow-gcp:hover::before { background: linear-gradient(90deg, transparent, #eab308, transparent); }
+        
+        /* Fabric - Cyan */
+        .glow-fabric:hover { border-color: #06b6d4; box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.3); transform: translateY(-5px); }
+        .glow-fabric:hover::before { background: linear-gradient(90deg, transparent, #06b6d4, transparent); }
+        
+        /* Johns Hopkins - Red */
+        .glow-jh:hover { border-color: #ef4444; box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.3); transform: translateY(-5px); }
+        .glow-jh:hover::before { background: linear-gradient(90deg, transparent, #ef4444, transparent); }
+    
+        /* Dibimbing.id - Emerald */
+        .glow-emerald:hover { border-color: #10b981; box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3); transform: translateY(-5px); }
+        .glow-emerald:hover::before { background: linear-gradient(90deg, transparent, #10b981, transparent); }
+
+        /* Classpedia - Purple */
+        .glow-purple:hover { border-color: #a855f7; box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.3); transform: translateY(-5px); }
+        .glow-purple:hover::before { background: linear-gradient(90deg, transparent, #a855f7, transparent); }
+
+        /* Indosat Ooredoo Hutchison - Yellow */
+        .glow-ioh:hover { border-color: #facc15; box-shadow: 0 10px 30px -10px rgba(250, 204, 21, 0.3); transform: translateY(-5px); }
+        .glow-ioh:hover::before { background: linear-gradient(90deg, transparent, #facc15, transparent); }
+
+        /* Custom Project Cards (POSTER EDITION) */
+        .project-card {
+            background: #0d0d0d;
+            border: 1px solid #1f1f1f;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.2);
+        }
+        /* Pembungkus Poster */
+        .project-img-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #050505;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            padding: 1.5rem;
+            overflow: hidden;
+            /* Tambahin transisi biar pergantian warna backgroundnya mulus */
+            transition: background-image 0.5s ease;
+        }
+
+        /* Ambient Glow di ruang kosong pas di-hover */
+        .project-card:hover .project-img-wrapper {
+            /* Cahaya biru neon tipis muncul dari tengah */
+            background-image: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, #050505 80%);
+        }
+
+        /* Posternya sendiri */
+        .project-img {
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; 
+            /* Ubah transition jadi 'all' biar shadow juga ikut ke-animasi */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            z-index: 2;
+        }
+
+        /* Efek pop-out poster pas kursor diarahkan */
+        .project-card:hover .project-img {
+            transform: scale(1.05) rotate(2deg); 
+            /* Tambahin efek glow di bayangan posternya */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.9), 0 0 50px rgba(59, 130, 246, 0.2);
+        }
+        .tech-tag {
+            font-size: 0.65rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: bold;
+        }
+
+        /* Skills & Footer Styles */
+        .skill-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: #0d0d0d;
+            border: 1px solid #1f1f1f;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: #9ca3af;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .skill-pill:hover {
+            border-color: #3b82f6;
+            color: #fff;
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+        }
+        .contact-box {
+            position: relative;
+            border-radius: 2rem;
+            background: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            overflow: hidden;
+            z-index: 1; /* Pastikan kotaknya ada di layer dasar */
+        }
+        .contact-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1; /* Lapisan glow ditaruh di BELAKANG konten */
+            pointer-events: none; /* BIAR BISA DIKLIK, lapisan ini diabaikan kursor */
+        }
+        .contact-box:hover::before {
+            opacity: 1;
+        }
+        /* Social Bento Buttons */
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: #0d0d0d;
+            border: 1px solid #1f1f1f;
+            border-radius: 1rem;
+            color: #9ca3af;
+            font-weight: bold;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0; height: 2px;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        /* Brand Colors Hover */
+        .btn-email:hover { color: #fff; border-color: #4b5563; box-shadow: 0 10px 20px -10px rgba(255,255,255,0.1); transform: translateY(-4px); background: #1a1a1a; }
+        .btn-email:hover::before { background: #fff; }
+
+        .btn-linkedin:hover { color: #3b82f6; border-color: #3b82f6; box-shadow: 0 10px 20px -10px rgba(59,130,246,0.3); transform: translateY(-4px); background: rgba(59,130,246,0.05); }
+        .btn-linkedin:hover::before { background: #3b82f6; }
+        
+        .btn-github:hover { color: #fff; border-color: #fff; box-shadow: 0 10px 20px -10px rgba(255,255,255,0.2); transform: translateY(-4px); background: rgba(255,255,255,0.05); }
+        .btn-github:hover::before { background: #fff; }
+        
+        .btn-ig:hover { color: #ec4899; border-color: #ec4899; box-shadow: 0 10px 20px -10px rgba(236,72,153,0.3); transform: translateY(-4px); background: rgba(236,72,153,0.05); }
+        .btn-ig:hover::before { background: linear-gradient(to right, #f9ce34, #ee2a7b, #6228d7); height: 3px; }
+        
+        .btn-jobstreet:hover { color: #0ea5e9; border-color: #0ea5e9; box-shadow: 0 10px 20px -10px rgba(14,165,233,0.3); transform: translateY(-4px); background: rgba(14,165,233,0.05); }
+        .btn-jobstreet:hover::before { background: #0ea5e9; }
+
+        /* Efek & Badge khusus sertifikat 2026 */
+        .vault-card.highlight-2026 {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: linear-gradient(145deg, #121212, #050505);
+        }
+        .badge-new {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            background: linear-gradient(45deg, #3b82f6, #ec4899);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 0.3rem 1rem;
+            border-radius: 0 1.5rem 0 1rem;
+            box-shadow: -2px 2px 15px rgba(236, 72, 153, 0.4);
+            z-index: 10;
+            letter-spacing: 0.1em;
+        }
+
+        /* Project Modal - Wider Version */
+        .project-modal-content {
+            max-width: 65rem !important; /* Lebih lebar dari modal sertifikat */
+        }
+
+        /* Slider Styles */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: #111;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: contain;
+        }
+        .slide.active {
+            display: block;
+            animation: fade 0.5s ease-in-out;
+        }
+        @keyframes fade {
+            from { opacity: 0.4; } 
+            to { opacity: 1; }
+        }
+
+        /* Navigasi Slider */
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            pointer-events: none;
+        }
+        .slider-arrow {
+            pointer-events: auto;
+            background: rgba(0,0,0,0.6); /* Agak digelapin dikit biar kontras */
+            color: white;
+            width: 44px; /* Ukuran pasti lebarnya */
+            height: 44px; /* Ukuran pasti tingginya */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%; /* Baru ini ngefek jadi lingkaran sempurna */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none; /* Biar panahnya gak kepilih/ke-block warna biru pas diklik cepet-cepet */
+            backdrop-filter: blur(4px); /* Tambahan efek blur kaca ala UI modern */
+        }
+        
+        .slider-arrow:hover {
+            background: #3b82f6;
+            transform: scale(1.1); /* Kasih efek membesar dikit pas di-hover */
+        }
+        .dots-container {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .dot {
+            height: 8px;
+            width: 8px;
+            background-color: #555;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .dot.active {
+            background-color: #3b82f6;
+            width: 20px;
+            border-radius: 4px;
+        }
+
+        /* 1. CUSTOM CYBER CURSOR */
+        body { cursor: none; } /* Matiin kursor bawaan */
+        
+        .cursor-dot {
+            width: 8px; height: 8px; background: #3b82f6;
+            position: fixed; top: 0; left: 0; border-radius: 50%;
+            pointer-events: none; z-index: 9999; 
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px #3b82f6, 0 0 20px #ec4899;
+        }
+        
+        .cursor-outline {
+            width: 40px; height: 40px; border: 1px solid rgba(59, 130, 246, 0.5);
+            position: fixed; top: 0; left: 0; border-radius: 50%;
+            pointer-events: none; z-index: 9998; 
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* 2. SCROLL REVEAL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3. PREMIUM NOISE BACKGROUND */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03; /* Sangat tipis biar elegan */
+            pointer-events: none; z-index: 9990;
+        }
+
+        /* === 3D MAGNETIC TILT === */
+        .tilt-card {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        /* Bikin elemen di dalem kartu kelihatan terbang (pop-out) */
+        .tilt-card > * {
+            transform: translateZ(30px);
+        }
+
+        /* === SECRET TERMINAL === */
+        #terminal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95);
+            z-index: 100000; font-family: 'JetBrains Mono', monospace;
+            color: #0f0; padding: 2rem; display: none; opacity: 0;
+            transition: opacity 0.3s; overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+        #terminal-overlay.active { display: block; opacity: 1; }
+        .term-line { margin-bottom: 0.5rem; }
+        .term-input-wrapper { display: flex; gap: 0.5rem; }
+        .term-input { background: transparent; border: none; color: #0f0; outline: none; flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 1rem; }
+        .term-btn {
+            position: fixed; bottom: 20px; right: 20px; z-index: 9000;
+            background: #0d0d0d; border: 1px solid #3b82f6; color: #3b82f6;
+            padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); transition: all 0.3s;
+        }
+        .term-btn:hover { background: #3b82f6; color: #fff; box-shadow: 0 0 25px rgba(59, 130, 246, 0.6); }
+
+        /* === 1. CYBER SCROLLBAR & SELECTION === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { 
+            background: #3b82f6; 
+            border-radius: 10px; 
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+        ::selection { background: rgba(236, 72, 153, 0.4); color: #fff; text-shadow: 0 0 5px #fff; }
+
+        /* === 2. RGB GLITCH HOVER EFFECT === */
+        .glitch-hover { position: relative; display: inline-block; }
+        .glitch-hover:hover::before, .glitch-hover:hover::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+        }
+        .glitch-hover:hover::before {
+            left: 2px; text-shadow: -2px 0 #ff00c1; animation: glitch-anim-1 0.2s infinite linear alternate-reverse;
+        }
+        .glitch-hover:hover::after {
+            left: -2px; text-shadow: -2px 0 #00fff9; animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 { 0% { clip-path: inset(20% 0 80% 0); } 20% { clip-path: inset(60% 0 10% 0); } 40% { clip-path: inset(40% 0 50% 0); } 60% { clip-path: inset(80% 0 5% 0); } 80% { clip-path: inset(10% 0 70% 0); } 100% { clip-path: inset(30% 0 20% 0); } }
+        @keyframes glitch-anim-2 { 0% { clip-path: inset(10% 0 60% 0); } 20% { clip-path: inset(30% 0 20% 0); } 40% { clip-path: inset(70% 0 10% 0); } 60% { clip-path: inset(20% 0 50% 0); } 80% { clip-path: inset(50% 0 30% 0); } 100% { clip-path: inset(5% 0 80% 0); } }
+    
+    /* === GOD MODE: OMEGA THEME (FIXED VERSION) === */
+        html.god-mode {
+            filter: hue-rotate(135deg) saturate(150%) contrast(110%);
+            transition: filter 1.5s ease-in-out;
+        }
+        
+        /* Anti-Avatar Shield buat foto */
+        html.god-mode img,
+        html.god-mode .project-img-wrapper {
+            filter: hue-rotate(-135deg) saturate(66%) contrast(90%);
+            transition: filter 1.5s ease-in-out;
+        }
+        
+        /* Animasi Gempa Bumi (Screen Shake) */
+        .earthquake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 4px, 0); }
+            40%, 60% { transform: translate3d(8px, -4px, 0); }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen p-6 md:p-12 lg:px-24">
+    <div id="preloader" class="fixed inset-0 z-[999999] bg-[#050505] flex flex-col justify-end items-start p-8 md:p-16 font-mono text-[#0f0] text-sm md:text-base transition-all duration-1000 ease-in-out">
+        <div id="boot-text" class="max-w-2xl w-full"></div>
+        <div class="mt-4 animate-pulse">_</div>
+    </div>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+    <canvas id="matrix-bg" class="fixed inset-0 z-[-2] pointer-events-none opacity-20"></canvas>
+
+    <nav class="flex justify-between items-center max-w-7xl mx-auto mb-16">
+        <div class="font-bold text-xl tracking-tighter glitch-hover" data-text="ALFIN.RF">
+            ALFIN<span class="text-blue-500">.RF</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm text-gray-500 font-medium items-center">
+            <a href="#about" class="hover:text-white transition">About</a>
+            <a href="#vault" class="hover:text-white transition">Certificates</a>
+            <a href="#projects" class="hover:text-white transition">Projects</a>
+            </a>
+            <a href="mailto:alfinrahmadfauzi300@gmail.com" class="text-blue-400 hover:underline">Hire Me?</a>
+        </div>
+    </nav>
+
+    <section id="about" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center mb-32 reveal">
+        <div class="lg:col-span-7">
+            <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 border border-blue-500/30 rounded-full bg-blue-500/5 text-[10px] uppercase tracking-widest text-blue-400 font-bold">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                Ready for New Challenges
+            </div>
+            <h1 class="text-5xl md:text-8xl font-bold mb-6 leading-tight">
+                <span id="hacker-name" data-value="Alfin Rahmad">Alfin Rahmad</span> <br>
+                <span class="text-gradient" id="hacker-last" data-value="Fauzi">Fauzi</span>.
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-10">
+                Mahasiswa D4 Teknik Informatika yang berfokus pada pengembangan ekosistem Mobile dan Web. Memadukan perancangan UI/UX yang intuitif dengan arsitektur sistem yang tangguh untuk menciptakan solusi digital yang fungsional.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#projects" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition shadow-lg shadow-blue-900/20">Explore Projects</a>
+                
+                <a href="cv/CV_Alfin Rahmad fauzi_4A.pdf" download class="px-8 py-4 border border-gray-800 bg-gray-900/50 hover:border-blue-500/50 hover:text-blue-400 rounded-2xl transition flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Download CV
+                </a>
+
+                <a href="https://github.com/AlfinRF1" target="_blank" class="px-8 py-4 border border-gray-800 hover:border-gray-600 rounded-2xl transition">My GitHub</a>
+            </div>
+        </div>
+        
+        <div class="lg:col-span-5 flex justify-center lg:justify-end items-center">
+            <div class="blob-frame scale-110 md:scale-125 transition-transform duration-500 hover:scale-[1.3]">
+                <img src="assets/Fotoprofil.png" alt="Alfin Rahmad Fauzi [cite: 1]" class="blob-photo shadow-2xl">
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto mb-32 reveal">
+        <div class="flex flex-col md:flex-row gap-12">
+            <div class="flex-1">
+                <h2 class="text-3xl font-bold tracking-tighter mb-6">Capabilities.</h2>
+                <p class="text-gray-400 mb-8 leading-relaxed max-w-md">
+                    Berpengalaman lintas disiplin mulai dari merancang antarmuka pengguna, membangun logika server, hingga menguji kualitas perangkat lunak.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 border-b border-gray-800 pb-4">
+                        <span class="text-blue-500 font-bold w-32">Roles</span>
+                        <span class="text-gray-300 text-sm">UI/UX Designer, Front-End, Back-End, QA</span>
+                    </div>
+                    <div class="flex items-center gap-4 border-b border-gray-800 pb-4">
+                        <span class="text-pink-500 font-bold w-32">Design & Tools</span>
+                        <span class="text-gray-300 text-sm">Figma, Android Studio, VS Code, Git/GitHub</span>
+                    </div>
+                    <div class="flex items-center gap-4 pb-4">
+                        <span class="text-emerald-500 font-bold w-32">Languages</span>
+                        <span class="text-gray-300 text-sm">Indonesia, English (B1), Mandarin, Rusia, Spanyol</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 flex flex-wrap content-start gap-3 mt-4 md:mt-0">
+                <div class="skill-pill">Flutter</div>
+                <div class="skill-pill">Laravel</div>
+                <div class="skill-pill">Bootstrap</div>
+                <div class="skill-pill">Gen AI</div>
+                <div class="skill-pill">Java</div>
+                <div class="skill-pill">Kotlin</div>
+                <div class="skill-pill">Python</div>
+                <div class="skill-pill">JavaScript</div>
+                <div class="skill-pill">HTML</div>
+                <div class="skill-pill">CSS</div>
+                <div class="skill-pill">PHP</div>
+                <div class="skill-pill">REST API</div>
+                <div class="skill-pill">SQL</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto mb-12 reveal">
+        <div class="contact-box p-8 md:p-16 text-center relative">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">Let's Build <br><span class="text-gradient">Something Epic.</span></h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-12 relative z-10">
+                Tertarik untuk kolaborasi atau punya tawaran pekerjaan yang menantang? Jangan ragu untuk menghubungi saya melalui platform di bawah.
+            </p>
+            
+            <div class="max-w-3xl mx-auto flex flex-col gap-4 relative z-10">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="https://wa.me/628564888656" target="_blank" class="px-8 py-4 bg-green-600/10 border border-green-500/30 text-green-400 font-bold rounded-2xl hover:bg-green-600 hover:text-white transition-all shadow-[0_0_20px_rgba(22,163,74,0.1)] hover:shadow-[0_0_30px_rgba(22,163,74,0.4)] flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.015c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                        +62 856 488 8656
+                    </a>
+                    <a href="mailto:alfinrahmadfauzi300@gmail.com" class="social-btn btn-email">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        alfinrahmadfauzi300@gmail.com
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="https://www.linkedin.com/in/alfin-rahmad-fauzi-01a625403/" target="_blank" class="social-btn btn-linkedin">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        LinkedIn
+                    </a>
+                    
+                    <a href="https://github.com/AlfinRF1" target="_blank" class="social-btn btn-github">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    
+                    <a href="https://www.instagram.com/alfin_rahmad_fauzi/" target="_blank" class="social-btn btn-ig">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        Instagram
+                    </a>
+                    
+                    <a href="https://id.jobstreet.com/id/profiles/alfin-rahmadfauzi-JGsCcr6Nl0" target="_blank" class="social-btn btn-jobstreet">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 7h-4v-2c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v2h-4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-10c0-1.103-.897-2-2-2zm-10-2h4v2h-4v-2zm10 14h-16v-3h16v3zm0-5h-16v-5h16v5z"/></svg>
+                        Jobstreet
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="vault" class="max-w-7xl mx-auto mb-32 reveal">
+        <div class="flex items-center gap-4 mb-12">
+            <h2 class="text-3xl font-bold tracking-tighter">The Certificates.</h2>
+            <div class="h-px bg-gray-800 flex-1"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="vault-card glow-emerald highlight-2026 group cursor-pointer" 
+                 onclick="openModal('Data Science & ML: Klasifikasi Data', 'Dibimbing.id', '2026', 'assets/DSML.png', 'https:drive.google.com/file/d/15CjimRnE_2EY1tvwb05jt0EG2eGeMulM/view?usp=sharing')">
+                <div class="badge-new">🔥 NEW</div>
+                <span class="text-emerald-400 font-bold text-[10px] tracking-widest uppercase">Dibimbing.id</span>
+                <h3 class="text-lg font-bold mt-1">Data Science & ML: Klasifikasi Data</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-white font-bold">2026</span>
+                    <span class="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-emerald highlight-2026 group cursor-pointer"
+                 onclick="openModal('Data Engineer: Strategi & Cloud Database', 'Dibimbing.id', '2026', 'assets/DataEngineer.png', 'https:drive.google.com/file/d/1V82IkDeSCUXFTLKrXezuMI8CSR_KxkDu/view?usp=sharing')">
+                <div class="badge-new">🔥 NEW</div>
+                <span class="text-emerald-400 font-bold text-[10px] tracking-widest uppercase">Dibimbing.id</span>
+                <h3 class="text-lg font-bold mt-1">Data Engineer: Strategi & Cloud Database</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-white font-bold">2026</span>
+                    <span class="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-purple highlight-2026 group cursor-pointer"
+                 onclick="openModal('AI & Generative AI Fundamentals', 'Classpedia', '2026', 'assets/Classpedia.png', 'https:drive.google.com/file/d/1vyfQ0_rMlHJu_y3oPih558QBpI7QA_3L/view?usp=sharing')">
+                <div class="badge-new">🔥 NEW</div>
+                <span class="text-purple-400 font-bold text-[10px] tracking-widest uppercase">Classpedia</span>
+                <h3 class="text-lg font-bold mt-1">AI & Generative AI Fundamentals</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-white font-bold">2026</span>
+                    <span class="text-[10px] text-purple-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-ioh highlight-2026 group cursor-pointer"
+                 onclick="openModal('Automation Webinar: UiPath x IOH', 'Indosat Ooredoo Hutchison', '2026', 'assets/IOH.png', 'https:drive.google.com/file/d/14pvQ5_FsF83oelmZ0YIB20A4XGcThDTQ/view?usp=sharing')">
+                <div class="badge-new">🔥 NEW</div>
+                <span class="text-yellow-400 font-bold text-[10px] tracking-widest uppercase">Indosat Ooredoo Hutchison</span>
+                <h3 class="text-lg font-bold mt-1">Automation Webinar: UiPath x IOH</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-white font-bold">2026</span>
+                    <span class="text-[10px] text-yellow-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-jh highlight-2026 group cursor-pointer"
+                 onclick="openModal('Global Business Study Trends', 'Carey Business School', '2026', 'assets/JH.png', 'https:drive.google.com/file/d/1-RIl5h08zKtfG_Plc0GdE_e4FK432Php/view?usp=sharing')">
+                <div class="badge-new">🔥 NEW</div>
+                <span class="text-red-400 font-bold text-[10px] tracking-widest uppercase">Carey Business School</span>
+                <h3 class="text-lg font-bold mt-1">Global Business Study Trends</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-white font-bold">2026</span>
+                    <span class="text-[10px] text-red-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-azure group cursor-pointer"
+                 onclick="openModal('Membangun Aplikasi Gen AI', 'Microsoft & Dicoding', '2025', 'assets/GenAI.png', 'https:drive.google.com/file/d/1QaLrKmFo4Vksze7sUc8JjmH1H5zY_cF9/view?usp=sharing')">
+                <span class="text-blue-400 font-bold text-[10px] tracking-widest uppercase">Microsoft & Dicoding</span>
+                <h3 class="text-lg font-bold mt-1">Membangun Aplikasi Gen AI</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-gray-500">2025</span>
+                    <span class="text-[10px] text-blue-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-aws group cursor-pointer"
+                 onclick="openModal('Dasar Cloud dan Gen AI', 'AWS & Dicoding', '2025', 'assets/Cloud.png', 'https:drive.google.com/file/d/1McaMGUMut1ChEAUBwON-hQ701eqJ5A4P/view?usp=sharing')">
+                <span class="text-orange-400 font-bold text-[10px] tracking-widest uppercase">AWS & Dicoding</span>
+                <h3 class="text-lg font-bold mt-1">Dasar Cloud dan Gen AI</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-gray-500">2025</span>
+                    <span class="text-[10px] text-orange-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-fabric group cursor-pointer"
+                 onclick="openModal('Penerapan Data Science Microsoft Fabric', 'Microsoft & Dicoding', '2025', 'assets/Fabric.png', 'https:drive.google.com/file/d/1IFBhO3entqgWbF6pyarwoxlq_Htxd5Sv/view?usp=sharing')">
+                <span class="text-cyan-400 font-bold text-[10px] tracking-widest uppercase">Microsoft & Dicoding</span>
+                <h3 class="text-lg font-bold mt-1">Penerapan Data Science Microsoft Fabric</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-gray-500">2025</span>
+                    <span class="text-[10px] text-cyan-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+            <div class="vault-card glow-gcp group cursor-pointer"
+                 onclick="openModal('Belajar Dasar AI', 'Google Cloud & Dicoding', '2025', 'assets/DasarAI.png', 'https:drive.google.com/file/d/1FW4sv75hXQ0IQka4inlgdBvUB2VYW5ux/view?usp=sharing')">
+                <span class="text-yellow-400 font-bold text-[10px] tracking-widest uppercase">Google Cloud & Dicoding</span>
+                <h3 class="text-lg font-bold mt-1">Belajar Dasar AI</h3>
+                <div class="mt-4 flex items-center justify-between">
+                    <span class="text-xs text-gray-500">2025</span>
+                    <span class="text-[10px] text-yellow-400 opacity-0 group-hover:opacity-100 transition tracking-widest">CLICK TO VIEW ↗</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects" class="max-w-7xl mx-auto mb-32 reveal">
+        <div class="flex items-center gap-4 mb-12">
+            <h2 class="text-3xl font-bold tracking-tighter">The Projects.</h2>
+            <div class="h-px bg-gray-800 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div onclick="openProjectModal(
+                'Nganjuk Abirupa', 
+                'Sistem tiket wisata digital terintegrasi untuk daerah Nganjuk. Mencakup aplikasi Mobile dan Web Dashboard, dilengkapi sistem pembayaran digital QRIS real-time dan sinkronisasi REST API.', 
+                'Android Native, Java/Kotlin, PHP REST API, QRIS Integration', 
+                ['assets/NA1.png', 'assets/NA2.png', 'assets/NA3.png'], 
+                'https:nganjukabirupa.pbltifnganjuk.com/caralogin.php'
+            )" class="project-card md:col-span-2 group flex-col md:flex-row cursor-pointer">
+                <div class="project-img-wrapper h-[350px] md:h-[400px] md:w-5/12">
+                    <img src="assets/NA.jpg" alt="Nganjuk Abirupa Poster" class="project-img">
+                </div>
+                <div class="p-8 md:w-7/12 flex flex-col justify-center border-t md:border-t-0 md:border-l border-gray-800/50">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">Flutter</span>
+                        <span class="tech-tag">PHP REST API</span>
+                        <span class="tech-tag">QRIS Integration</span>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 group-hover:text-blue-400 transition">Nganjuk Abirupa</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-3xl">
+                        Sistem tiket wisata digital terintegrasi untuk daerah Nganjuk. Mencakup aplikasi Mobile dan Web Dashboard, dilengkapi sistem pembayaran digital QRIS real-time dan sinkronisasi REST API.
+                    </p>
+                </div>
+            </div>
+
+            <div onclick="openProjectModal(
+                'Fortune Wash', 
+                'Aplikasi kasir desktop untuk digitalisasi operasional UMKM pencucian kendaraan. Dilengkapi fitur login keamanan RFID, manajemen member, pelacakan barang, dan pelaporan keuangan otomatis.', 
+                'Desktop App, RFID', 
+                ['assets/FW1.jpg', 'assets/FW2.jpg', 'assets/FW3.jpg'], 
+                'https:pameran-jti.polije.ac.id/product/240/fortune-wash'
+            )" class="project-card group cursor-pointer">
+                <div class="project-img-wrapper h-[300px]">
+                    <img src="assets/FW.png" alt="Fortune Wash Poster" class="project-img">
+                </div>
+                <div class="p-6 border-t border-gray-800/50 flex-1 flex flex-col">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag text-pink-400 border-pink-500/20 bg-pink-500/10">Desktop App</span>
+                        <span class="tech-tag text-pink-400 border-pink-500/20 bg-pink-500/10">RFID</span>
+                        <span class="tech-tag text-pink-400 border-pink-500/20 bg-pink-500/10">NetBeans</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-pink-400 transition">Fortune Wash</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Aplikasi kasir desktop untuk digitalisasi operasional UMKM pencucian kendaraan. Dilengkapi fitur login keamanan RFID, manajemen member, pelacakan barang, dan pelaporan keuangan otomatis.
+                    </p>
+                </div>
+            </div>
+
+            <div onclick="openProjectModal(
+                'FLOREO', 
+                'Arsitektur perangkat lunak untuk manajemen basis data pelanggan dan pemantauan stok bahan baku. Menyajikan laporan keuangan otomatis dan analisis preferensi layanan pelanggan.', 
+                'System Analyst, Database Mgmt', 
+                ['assets/FLR1.png', 'assets/FLR2.png', 'assets/FLR3.png'], 
+                'https:pameran-jti.polije.ac.id/x23241_ng/product/127/floreo'
+            )" class="project-card group cursor-pointer">
+                <div class="project-img-wrapper h-[300px]">
+                    <img src="assets/FLR.png" alt="FLOREO Poster" class="project-img">
+                </div>
+                <div class="p-6 border-t border-gray-800/50 flex-1 flex flex-col">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tech-tag text-emerald-400 border-emerald-500/20 bg-emerald-500/10">System Analyst</span>
+                        <span class="tech-tag text-emerald-400 border-emerald-500/20 bg-emerald-500/10">MySQL</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-emerald-400 transition">FLOREO</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Arsitektur perangkat lunak untuk manajemen basis data pelanggan dan pemantauan stok bahan baku. Menyajikan laporan keuangan otomatis dan analisis preferensi layanan pelanggan.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="max-w-7xl mx-auto border-t border-gray-900 py-12 text-center text-gray-600 text-xs">
+        <p>&copy; 2026 Alfin Rahmad Fauzi. Built with Passion and Tailwind CSS.</p>
+    </footer>
+
+    <div id="cert-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="relative w-full max-w-3xl bg-[#0a0a0a] border border-gray-800 rounded-3xl p-6 md:p-8 shadow-[0_0_50px_rgba(59,130,246,0.15)] transform scale-95 transition-transform duration-300 mx-4" id="modal-content">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 p-2 text-gray-500 hover:text-white hover:bg-gray-800 rounded-full transition z-10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="w-full md:w-1/2 aspect-[4/3] bg-[#111] rounded-xl border border-gray-800 overflow-hidden relative group">
+                    <img id="modal-img" src="" alt="Certificate Preview" class="w-full h-full object-contain p-2">
+                </div>
+
+                <div class="w-full md:w-1/2 flex flex-col justify-center text-left">
+                    <span id="modal-issuer" class="text-blue-400 font-bold text-xs tracking-widest uppercase mb-2">Issuer</span>
+                    <h3 id="modal-title" class="text-2xl md:text-3xl font-bold mb-4">Certificate Title</h3>
+                    
+                    <p class="text-gray-400 text-sm mb-8 flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Tahun Terbit: <span id="modal-date" class="text-white font-bold ml-1">Date</span>
+                    </p>
+                    
+                    <a id="modal-verify-btn" href="#" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition shadow-lg shadow-blue-900/20 w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        Cek Keaslian Sertifikat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="term-btn" onclick="openTerminal()">>_</button>
+
+    <div id="terminal-overlay" onclick="document.getElementById('cmd-input').focus()">
+        <div id="term-output">
+            <div class="term-line">System initialized... Welcome, Guest.</div>
+            <div class="term-line">Type <span class="text-white font-bold">'help'</span> to see available commands. Type <span class="text-red-500 font-bold">'exit'</span> to close.</div>
+        </div>
+        <div class="term-input-wrapper mt-2">
+            <span>root@alfinrf:~$</span>
+            <input type="text" id="cmd-input" class="term-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+    </div>
+
+    <script>
+    /* === SYSTEM BOOT PRELOADER LOGIC === */
+        const preloader = document.getElementById('preloader');
+        const bootTextContainer = document.getElementById('boot-text');
+        
+        // Teks yang bakal diketik otomatis
+        const bootLines = [
+            "> INITIALIZING SYSTEM KERNEL...",
+            "> MOUNTING VIRTUAL DRIVES... OK",
+            "> LOADING UI/UX PROTOCOLS... OK",
+            "> ESTABLISHING DATABASE CONNECTION... OK",
+            "> BYPASSING FIREWALL... SUCCESS",
+            "> WELCOME, GUEST. ACCESS GRANTED."
+        ];
+
+        let lineIndex = 0;
+
+        function typeBootLine() {
+            if (lineIndex < bootLines.length) {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'mb-1';
+                if (lineIndex === bootLines.length - 1) {
+                    lineDiv.classList.add('text-blue-400', 'font-bold', 'mt-4'); // Baris terakhir beda warna
+                }
+                bootTextContainer.appendChild(lineDiv);
+                
+                let charIndex = 0;
+                let currentLine = bootLines[lineIndex];
+                
+                // Ngetik per huruf
+                let typeInterval = setInterval(() => {
+                    lineDiv.textContent += currentLine[charIndex];
+                    charIndex++;
+                    if (charIndex >= currentLine.length) {
+                        clearInterval(typeInterval);
+                        lineIndex++;
+                        setTimeout(typeBootLine, 200); // Jeda sebelum ngetik baris berikutnya
+                    }
+                }, 20); // Kecepatan ngetik
+            } else {
+                // Selesai ngetik, ilangin layar preloader
+                setTimeout(() => {
+                    preloader.style.transform = 'translateY(-100%)'; // Layar keangkat ke atas
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 1000);
+                }, 800);
+            }
+        }
+
+        // Jalankan pas web baru dibuka
+        window.onload = () => {
+            // Biar halaman gak bisa di-scroll pas loading
+            window.scrollTo(0, 0); 
+            setTimeout(typeBootLine, 500);
+        };
+
+        function openModal(title, issuer, date, imgSrc, verifyUrl) {
+            const modal = document.getElementById('cert-modal');
+            const content = document.getElementById('modal-content');
+            
+            // Masukin data dinamis ke dalam pop-up
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-issuer').textContent = issuer;
+            document.getElementById('modal-date').textContent = date;
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal-verify-btn').href = verifyUrl;
+            
+            // Tampilkan pop-up dengan animasi halus
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+            
+            // Kunci layar belakang biar gak bisa di-scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('cert-modal');
+            const content = document.getElementById('modal-content');
+            
+            // Animasi ngilang
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Balikin scroll
+            }, 300);
+        }
+
+        // Kalau user klik di area gelap luar kotak, otomatis ketutup
+        document.getElementById('cert-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        let currentSlideIndex = 0;
+        let totalSlides = 0;
+
+        function openProjectModal(title, desc, tags, images, link) {
+            const modal = document.getElementById('project-modal');
+            const content = document.getElementById('p-modal-content');
+            
+            document.getElementById('p-modal-title').textContent = title;
+            document.getElementById('p-modal-desc').textContent = desc;
+            document.getElementById('p-modal-link').href = link;
+            
+            // Generate Tags
+            const tagsWrapper = document.getElementById('p-modal-tags');
+            tagsWrapper.innerHTML = '';
+            tags.split(',').forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'px-3 py-1 bg-gray-900 border border-gray-800 rounded-full text-[10px] text-blue-400 font-bold uppercase';
+                span.textContent = tag.trim();
+                tagsWrapper.appendChild(span);
+            });
+
+            // Generate Slides & Dots
+            const slidesWrapper = document.getElementById('slides-wrapper');
+            const dotsWrapper = document.getElementById('dots-wrapper');
+            slidesWrapper.innerHTML = '';
+            dotsWrapper.innerHTML = '';
+            
+            totalSlides = images.length;
+            currentSlideIndex = 0;
+
+            images.forEach((imgSrc, index) => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.className = `slide ${index === 0 ? 'active' : ''}`;
+                slidesWrapper.appendChild(img);
+
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = () => showSlide(index);
+                dotsWrapper.appendChild(dot);
+            });
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (index >= totalSlides) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = totalSlides - 1;
+            else currentSlideIndex = index;
+
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function changeSlide(n) { showSlide(currentSlideIndex + n); }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            const content = document.getElementById('p-modal-content');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        /* === CUSTOM CURSOR LOGIC === */
+        const cursorDot = document.querySelector("[data-cursor-dot]");
+        const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Titik tengah langsung ngikutin
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Garis luar ngikutin dengan sedikit delay biar smooth (animasi)
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Kalau kursor kena link/tombol, membesar!
+        document.querySelectorAll('a, button, .cursor-pointer').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        /* === SCROLL REVEAL LOGIC === */
+        function revealOnScroll() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100; // Jarak sebelum muncul
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", revealOnScroll);
+        // Panggil sekali pas pertama load
+        revealOnScroll();
+
+        /* === 1. HACKER TEXT SCRAMBLE (MATRIX EFFECT) === */
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+        function applyHackerEffect(element) {
+            let interval = null;
+            element.onmouseover = event => {
+                let iteration = 0;
+                clearInterval(interval);
+                interval = setInterval(() => {
+                    event.target.innerText = event.target.innerText.split("")
+                        .map((letter, index) => {
+                            if(index < iteration) return event.target.dataset.value[index];
+                            return letters[Math.floor(Math.random() * 26)];
+                        }).join("");
+                    if(iteration >= event.target.dataset.value.length) clearInterval(interval);
+                    iteration += 1 / 3;
+                }, 30);
+            }
+        }
+        applyHackerEffect(document.getElementById("hacker-name"));
+        applyHackerEffect(document.getElementById("hacker-last"));
+
+        /* === 2. 3D MAGNETIC TILT CARDS === */
+        const tiltCards = document.querySelectorAll('.vault-card, .project-card');
+        tiltCards.forEach(card => {
+            card.classList.add('tilt-card'); // Otomatis tambahin class tilt
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                // Kalkulasi kemiringan brutal (makin gede angka 20, makin miring)
+                const rotateX = ((y - centerY) / centerY) * -15; 
+                const rotateY = ((x - centerX) / centerX) * 15;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                card.style.borderColor = '#3b82f6';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.borderColor = '#1f1f1f';
+            });
+        });
+
+        /* === 3. SECRET TERMINAL ENGINE === */
+        const termOverlay = document.getElementById('terminal-overlay');
+        const termOutput = document.getElementById('term-output');
+        const cmdInput = document.getElementById('cmd-input');
+
+        function openTerminal() {
+            termOverlay.classList.add('active');
+            cmdInput.value = '';
+            setTimeout(() => cmdInput.focus(), 100);
+            document.body.style.overflow = 'hidden'; // Stop scroll belakang
+        }
+
+        function closeTerminal() {
+            termOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        cmdInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = this.value.trim().toLowerCase();
+                if (cmd === '') return;
+                
+                // Print command yang diketik
+                termOutput.innerHTML += `<div class="term-line text-blue-400">root@alfinrf:~$ ${cmd}</div>`;
+                
+                // Logika Respon Terminal
+                if (cmd === 'help') {
+                    termOutput.innerHTML += `<div class="term-line text-gray-300">Available commands: <br>- <span class="text-yellow-400">whoami</span> (About me)<br>- <span class="text-yellow-400">skills</span> (View tech stack)<br>- <span class="text-yellow-400">hire</span> (Contact me)<br>- <span class="text-yellow-400">clear</span> (Clear terminal)<br>- <span class="text-red-400">exit</span> (Close terminal)</div>`;
+                } else if (cmd === 'whoami') {
+                    termOutput.innerHTML += `<div class="term-line text-white">Alfin Rahmad Fauzi.<br>Undergraduate Informatics Engineering student. Specialist in UI/UX, Front-End, Back-End, and QA.<br>Current Status: Ready to build epic things.</div>`;
+                } else if (cmd === 'skills') {
+                    termOutput.innerHTML += `<div class="term-line text-emerald-400">[██████████] Flutter, Kotlin, Java, Python<br>[████████░░] PHP, SQL, HTML, CSS, JS<br>Tools: Android Studio, Figma, Git.</div>`;
+                } else if (cmd === 'hire') {
+                    termOutput.innerHTML += `<div class="term-line text-pink-400">Initiating contact protocol... Opening WhatsApp.</div>`;
+                    window.open('https://wa.me/6285648888656', '_blank');
+                } else if (cmd === 'clear') {
+                    termOutput.innerHTML = '';
+                } else if (cmd === 'exit') {
+                    closeTerminal();
+                } else {
+                    termOutput.innerHTML += `<div class="term-line text-red-500">Command not found: ${cmd}. Type 'help' for available commands.</div>`;
+                }
+                
+                this.value = ''; // Reset input
+                termOverlay.scrollTop = termOverlay.scrollHeight; // Auto scroll ke bawah
+            }
+        });
+
+        /* === 1. MATRIX DIGITAL RAIN ENGINE === */
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for(let x = 0; x < columns; x++) { drops[x] = 1; }
+
+        function drawMatrix() {
+            // Bikin efek fading biar ekor hujannya ngilang pelan-pelan
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#3b82f6'; // Warna hujan (Biru Neon)
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.97) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        // Jalankan hujannya setiap 30 milidetik
+        setInterval(drawMatrix, 30);
+
+        // Biar hujannya nggak putus kalau layar di-resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        /* === 2. SECRET KEYLOGGER (GOD MODE: ULTRA SAFE) === */
+        let konamiCode = "";
+        const secretWord = "alfin"; // KATA KUNCI UDAH GANTI JADI NAMA LU
+
+        window.addEventListener("keydown", (e) => {
+            // Jangan deteksi kalau lagi ngetik di dalam terminal biar ga bentrok
+            if(document.activeElement.id === 'cmd-input') return;
+
+            // SUPER PENTING: Abaikan tombol siluman (Shift, CapsLock, Backspace, Enter, dll)
+            // Tombol huruf/angka normal itu panjang (length) string-nya cuma 1
+            if (e.key.length > 1) return;
+
+            // Masukin huruf yang diketik ke memori
+            konamiCode += e.key.toLowerCase();
+            
+            // Motong string secara absolut dari belakang (cuma nyimpen 5 huruf terakhir)
+            konamiCode = konamiCode.slice(-secretWord.length);
+
+            // Cek apakah 5 huruf terakhir itu "alfin"
+            if (konamiCode === secretWord) {
+                // Trigger Gempa (Gempa tetep di body biar aman)
+                document.body.classList.add('earthquake');
+                
+                // SUPER FIX: Ubah Tema Jadi God Mode di tag HTML (documentElement) bukan body
+                document.documentElement.classList.toggle('god-mode');
+                
+                // Hapus efek gempa setelah beres
+                setTimeout(() => {
+                    document.body.classList.remove('earthquake');
+                }, 500);
+            }
+            
+        });
+        
+    </script>
+
+    <div id="project-modal" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="project-modal-content relative w-full bg-[#0a0a0a] border border-gray-800 rounded-[2.5rem] p-4 md:p-10 shadow-2xl transform scale-95 transition-transform duration-300 mx-4" id="p-modal-content">
+            
+            <button onclick="closeProjectModal()" class="absolute top-6 right-6 p-2 text-gray-500 hover:text-white bg-gray-900 rounded-full z-[70]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="flex flex-col lg:flex-row gap-10">
+                <div class="w-full lg:w-3/5">
+                    <div class="slider-container">
+                        <div id="slides-wrapper">
+                            </div>
+                        
+                        <div class="slider-nav">
+                            <div class="slider-arrow" onclick="changeSlide(-1)">❮</div>
+                            <div class="slider-arrow" onclick="changeSlide(1)">❯</div>
+                        </div>
+                        <div class="dots-container" id="dots-wrapper">
+                            </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-2/5 flex flex-col justify-center">
+                    <h3 id="p-modal-title" class="text-3xl md:text-4xl font-bold mb-4">Project Title</h3>
+                    <div id="p-modal-tags" class="flex flex-wrap gap-2 mb-6">
+                        </div>
+                    <div class="prose prose-invert max-w-none mb-8">
+                        <p id="p-modal-desc" class="text-gray-400 leading-relaxed text-sm md:text-base">
+                            Deskripsi detail proyek akan muncul di sini.
+                        </p>
+                    </div>
+                    
+                    <a id="p-modal-link" href="#" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl transition shadow-lg shadow-blue-900/40">
+                        Visit Live Project
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
