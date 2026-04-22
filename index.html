@@ -516,8 +516,44 @@
             30%, 50%, 70% { transform: translate3d(-8px, 4px, 0); }
             40%, 60% { transform: translate3d(8px, -4px, 0); }
         }
-    </style>
+
+        /* === ELEGANT BLOB CLICK EFFECT (FIXED V2) === */
+        .blob-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0; 
+            border-radius: inherit; 
+            background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 50%, transparent 80%);
+            background-size: 200% 100%;
+            background-position: 200% 0; 
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0; /* Standby dalam mode gaib */
+        }
+
+        .blob-shimmer::after {
+            animation: shine-sweep 0.7s ease-out forwards;
+        }
+
+        .blob-press {
+            animation: soft-press 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes shine-sweep {
+            0% { background-position: 200% 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { background-position: -100% 0; opacity: 0; } /* Pas nyampe ujung, langsung ngilang! */
+        }
+
+        @keyframes soft-press {
+            0% { transform: scale(1.3); } 
+            40% { transform: scale(1.15); filter: brightness(0.9); }
+            100% { transform: scale(1.3); filter: brightness(1); }
+        } 
+</style>
 </head>
+
 <body class="antialiased min-h-screen p-6 md:p-12 lg:px-24">
     <div class="cursor-dot" data-cursor-dot></div>
     <div class="cursor-outline" data-cursor-outline></div>
@@ -565,8 +601,8 @@
         </div>
         
         <div class="lg:col-span-5 flex justify-center lg:justify-end items-center">
-            <div class="blob-frame scale-110 md:scale-125 transition-transform duration-500 hover:scale-[1.3]">
-                <img src="assets/Fotoprofil.png" alt="Alfin Rahmad Fauzi [cite: 1]" class="blob-photo shadow-2xl">
+            <div id="hero-blob" onclick="triggerElegantClick()" class="blob-frame scale-110 md:scale-125 transition-transform duration-500 hover:scale-[1.3] cursor-pointer">
+                <img src="assets/Fotoprofil.png" alt="Alfin Rahmad Fauzi" class="blob-photo shadow-2xl">
             </div>
         </div>
     </section>
@@ -775,7 +811,7 @@
             <div onclick="openProjectModal(
                 'Nganjuk Abirupa', 
                 'Sistem tiket wisata digital terintegrasi untuk daerah Nganjuk. Mencakup aplikasi Mobile dan Web Dashboard, dilengkapi sistem pembayaran digital QRIS real-time dan sinkronisasi REST API.', 
-                'Android Native, Java/Kotlin, PHP REST API, QRIS Integration', 
+                'Bootstrap, Flutter, PHP REST API, QRIS Integration', 
                 ['assets/NA1.png', 'assets/NA2.png', 'assets/NA3.png'], 
                 'https://nganjukabirupa.pbltifnganjuk.com/caralogin.php'
             )" class="project-card md:col-span-2 group flex-col md:flex-row cursor-pointer">
@@ -799,7 +835,7 @@
             <div onclick="openProjectModal(
                 'Fortune Wash', 
                 'Aplikasi kasir desktop untuk digitalisasi operasional UMKM pencucian kendaraan. Dilengkapi fitur login keamanan RFID, manajemen member, pelacakan barang, dan pelaporan keuangan otomatis.', 
-                'Desktop App, RFID', 
+                'Desktop App, RFID, NetBeans',  
                 ['assets/FW1.jpg', 'assets/FW2.jpg', 'assets/FW3.jpg'], 
                 'https://pameran-jti.polije.ac.id/product/240/fortune-wash'
             )" class="project-card group cursor-pointer">
@@ -822,7 +858,7 @@
             <div onclick="openProjectModal(
                 'FLOREO', 
                 'Arsitektur perangkat lunak untuk manajemen basis data pelanggan dan pemantauan stok bahan baku. Menyajikan laporan keuangan otomatis dan analisis preferensi layanan pelanggan.', 
-                'System Analyst, Database Mgmt', 
+                'System Analyst, MySQL', 
                 ['assets/FLR1.png', 'assets/FLR2.png', 'assets/FLR3.png'], 
                 'https://pameran-jti.polije.ac.id/x23241_ng/product/127/floreo'
             )" class="project-card group cursor-pointer">
@@ -1239,6 +1275,24 @@
             
         });
         
+        /* === ELEGANT BLOB CLICK TRIGGER === */
+        function triggerElegantClick() {
+            const blob = document.getElementById('hero-blob');
+            
+            // Hapus class animasi biar bisa diulang
+            blob.classList.remove('blob-press', 'blob-shimmer');
+            
+            // Trik reflow DOM biar animasinya nge-reset
+            void blob.offsetWidth; 
+            
+            // Tambahin class animasinya lagi secara bersamaan
+            blob.classList.add('blob-press', 'blob-shimmer');
+
+            // THE FIX: Timer tukang sapu! Hapus class setelah 700ms (sesuai durasi CSS)
+            setTimeout(() => {
+                blob.classList.remove('blob-press', 'blob-shimmer');
+            }, 700);
+        }
     </script>
 
     <div id="project-modal" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
